@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/light-forms/backend/handlers"
+
 	"github.com/go-chi/chi"
 )
 
 func main() {
-	fmt.Println("Hello World!")
 	router := chi.NewRouter()
 
 	router.Route("/", func(route chi.Router) {
-		route.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("Hello World!"))
+		route.Get("/health", handlers.HealthCheck)
+		route.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte("Hello Root World!"))
 		})
 	})
 
 	server := &http.Server{
-		Addr:    ":8080",
+		Addr:    ":3003",
 		Handler: router,
 	}
 
